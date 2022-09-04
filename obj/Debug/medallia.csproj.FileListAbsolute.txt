@@ -1,0 +1,9 @@
+C:\Temporales\Medallia\medallia\bin\medallia.dll
+C:\Temporales\Medallia\medallia\bin\medallia.pdb
+C:\Temporales\Medallia\medallia\obj\Debug\medallia.dll
+C:\Temporales\Medallia\medallia\obj\Debug\medallia.pdb
+C:\Temporales\Medallia\medallia\obj\Debug\medallia.csprojResolveAssemblyReference.cache
+D:\Proyectos NET\Medallia\medallia\bin\medallia.dll
+D:\Proyectos NET\Medallia\medallia\bin\medallia.pdb
+D:\Proyectos NET\Medallia\medallia\obj\Debug\medallia.dll
+D:\Proyectos NET\Medallia\medallia\obj\Debug\medallia.pdb
