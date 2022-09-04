@@ -1,0 +1,37 @@
+select Reagenda,
+		Motivo,
+		Contexto,
+		usuario as Clooper,
+		Id_cliente,
+		Id_encuesta,
+		fecha_encuesta as [Fecha encuesta],
+		fecha_mail as [Fecha carga],
+		fecha_fin as [Fecha cierre],
+		nombre_tecnico as [Técnico],
+		Dni,
+		nombre_cliente as [Nombre cliente],
+		Direccion,
+		Localidad,
+		Contacto,
+		nro_orden as [N° Orden],
+		access_id as [Access ID],
+		Bucket,
+		descripcion_contrata as Empresa,
+		Nps,
+		Tecnico,
+		Puntualidad,
+		Profesionalidad,
+		Conocimiento,
+		Calidad,
+		[Motivo detractor],
+		Concepto,
+		Subconcepto,
+		Detalle,
+		[Acción ejecutada],
+		Estado,
+		comentarios_cliente as [Comentarios del cliente]
+		
+from lista_medallia_casos
+where [Acción ejecutada] = 'Derivado a la contratista' and
+		(Estado = 'Escalado / Refuerzo' or
+		Estado = 'Escalado')

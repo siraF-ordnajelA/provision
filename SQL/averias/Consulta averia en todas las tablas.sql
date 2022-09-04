@@ -1,0 +1,5 @@
+select * from toa_pm where [Número de Petición] = 'CRM38793064_202262719340'
+select * from toa_ultima where [Número de Petición] = 'CRM38793064_202262719340'
+select * from toa_primera where [Número de Petición] = 'CRM38793064_202262719340'
+select * from bcp_toa_no_programado where [Número de Petición] = 'CRM38793064_202262719340'
+select * from toa_no_programado where [Número de Petición] = 'CRM38793064_202262719340'

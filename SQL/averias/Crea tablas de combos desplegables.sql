@@ -1,0 +1,2 @@
+create table cbo_subtipo_actividad (id_subtipo tinyint not null primary key identity (1,1), subtipo varchar (80))
+create table cbo_codigo_actuacion (id_subtipo tinyint, codigo_actuacion varchar (80), id_cod tinyint not null primary key identity (1,1))

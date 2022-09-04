@@ -1,0 +1,1 @@
+select cast ('20190321 06:51' as smalldatetime)

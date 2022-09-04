@@ -1,0 +1,11 @@
+create table metricas_tecnico (Fecha date,
+							id_ctta tinyint,
+							id_recurso int,
+							metrica_cumplidas decimal(8,6),
+							metrica_garantias decimal(8,6),
+							metrica_garantias_7d decimal(8,6),
+							metrica_monitoreos decimal(8,6),
+							metrica_diarias decimal(8,6),
+							metrica_citas decimal(8,6),
+							metrica_presentismo decimal(8,6),
+							tecnologia tinyint)	
