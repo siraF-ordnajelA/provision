@@ -50,6 +50,7 @@ namespace medallia
                     System.Web.HttpContext.Current.Session["id_usuario"] = ds.Tables[0].Rows[0]["id_usr"].ToString();
                     System.Web.HttpContext.Current.Session["centro_sesion"] = ds.Tables[0].Rows[0]["centro"].ToString();
                     System.Web.HttpContext.Current.Session["perfil"] = ds.Tables[0].Rows[0]["perfil"].ToString();
+                    System.Web.HttpContext.Current.Session["id_ctta"] = ds.Tables[0].Rows[0]["id_contrata"].ToString();
 
                     Random rd = new Random();
                     int rand_num = rd.Next(1, 10000);

@@ -118,6 +118,7 @@
                                     <div class="form-group">
                                         <label>Gerencia</label>
                                         <input type="text" class="form-control" id="txt_gerencia" disabled />
+                                        <label id="lbl_region_mop" hidden></label>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">

@@ -17,6 +17,7 @@ namespace medallia.clases
         public string cliente { get; set; }
         public string segmento { get; set; }
         public string tecnologia { get; set; }
+        public string region_mop { get; set; }
         public string gerencia { get; set; }
         public string distrito_atc { get; set; }
         public string direccion { get; set; }

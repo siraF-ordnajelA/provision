@@ -19,6 +19,7 @@ function buscar() {
     var empresa = $('#txt_empresa');
     var orden = $('#txt_orden');
     var access_id = $('#txt_accessid');
+    var region_mop = $('#lbl_region_mop');
     var bucket = $('#txt_bucket');
     var id_central = $('#lbl_idcentral');
     var gerencia = $('#txt_gerencia');
@@ -43,6 +44,7 @@ function buscar() {
                 empresa.empty();
                 orden.empty();
                 access_id.empty();
+                region_mop.empty();
                 bucket.empty();
                 gerencia.empty();
                 distrito.empty();
@@ -61,6 +63,7 @@ function buscar() {
                     orden.val(item.orden);
                     access_id.val(item.access);
                     bucket.val(item.bucket);
+                    region_mop.html(item.region_mop);
                     gerencia.val(item.gerencia);
                     distrito.val(item.distrito);
                     central.val(item.central);
@@ -562,6 +565,7 @@ function guardar() {
     var id_encuesta = document.getElementById("txt_idencuesta").value;
     var nombre = document.getElementById("txt_nombre").value;
     var direccion = document.getElementById("txt_direccion").value;
+    var region_mop = document.getElementById("lbl_region_mop").innerText;
     var localidad = document.getElementById("txt_localidad").value;
     var tel_contacto = document.getElementById("txt_contacto").value;
     var orden = document.getElementById("txt_orden").value;
@@ -675,6 +679,7 @@ function guardar() {
                 id_encu: id_encuesta,
                 fecha: fecha_encuesta,
                 nom: nombre,
+                region: region_mop,
                 dire: direccion,
                 loca: localidad,
                 tel: tel_contacto,

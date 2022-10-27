@@ -512,9 +512,98 @@ namespace medallia
                     }
                     if (opc == 2)
                     {
+                        resultados.empresa = lector["region"].ToString();
+                        resultados.instalaciones = Convert.ToInt32(lector["Instalados"].ToString());
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+                    if (opc == 3)
+                    {
+                        resultados.empresa = lector["Segmento"].ToString();
+                        resultados.instalaciones = Convert.ToInt32(lector["Instalados"].ToString());
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+                    if (opc == 4)
+                    {
+                        resultados.empresa = lector["tecnologia"].ToString();
+                        resultados.instalaciones = Convert.ToInt32(lector["Instalados"].ToString());
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        //resultados.instalaciones = Convert.ToInt32(lector["total"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+                    if (opc == 5)
+                    {
+                        resultados.empresa = lector["localidad"].ToString();
+                        resultados.instalaciones = Convert.ToInt32(lector["Instalados"].ToString());
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+
+                    lista_datos.Add(resultados);
+                }
+                con.Close();
+            }
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(lista_datos));
+        }
+
+        [WebMethod]
+        public void barra_detracciones_por_accion(Int16 id_empresa, String fecha1, String fecha2, Int16 opc)
+        {
+            List<clases.metricas_detractores_instalaciones> lista_datos = new List<clases.metricas_detractores_instalaciones>();
+
+            using (SqlConnection con = new SqlConnection(cadena))
+            {
+                SqlCommand cmdcadena = new SqlCommand();
+                cmdcadena.CommandType = CommandType.StoredProcedure;
+                cmdcadena.CommandText = "metricas_detractores_accion @id_empresa, @fecha1, @fecha2, @opc";
+                cmdcadena.CommandType = CommandType.Text;
+                cmdcadena.Parameters.Add("@id_empresa", SqlDbType.TinyInt).Value = id_empresa;
+                cmdcadena.Parameters.Add("@fecha1", SqlDbType.Text).Value = fecha1;
+                cmdcadena.Parameters.Add("@fecha2", SqlDbType.Text).Value = fecha2;
+                cmdcadena.Parameters.Add("@opc", SqlDbType.TinyInt).Value = opc;
+
+                cmdcadena.Connection = con;
+                con.Open();
+                SqlDataReader lector = cmdcadena.ExecuteReader();
+
+                while (lector.Read())
+                {
+                    clases.metricas_detractores_instalaciones resultados = new clases.metricas_detractores_instalaciones();
+                    if (opc == 1)
+                    {
+                        resultados.empresa = lector["Accion_ejecutada"].ToString();
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        resultados.instalaciones = Convert.ToInt32(lector["totales"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+                    if (opc == 2)
+                    {
                         resultados.empresa = lector["region_mop"].ToString();
                         resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
-                        resultados.instalaciones = Convert.ToInt32(lector["total"].ToString());
+                        resultados.instalaciones = Convert.ToInt32(lector["totales"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+                    if (opc == 3)
+                    {
+                        resultados.empresa = lector["Segmento"].ToString();
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        resultados.instalaciones = Convert.ToInt32(lector["totales"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+                    if (opc == 4)
+                    {
+                        resultados.empresa = lector["tecnologia"].ToString();
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        resultados.instalaciones = Convert.ToInt32(lector["totales"].ToString());
+                        resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
+                    }
+                    if (opc == 5)
+                    {
+                        resultados.empresa = lector["localidad"].ToString();
+                        resultados.cantidad = Convert.ToInt32(lector["casos"].ToString());
+                        resultados.instalaciones = Convert.ToInt32(lector["totales"].ToString());
                         resultados.porcentaje = Convert.ToSingle(lector["Porcentaje"].ToString());
                     }
 

@@ -43,7 +43,7 @@
    </style>
 
    <!-- Highcharts -->
-   <script src="js/highcharts.js"></script>
+   <script src="js/highcharts.js?v=<%= Session["rd_number"] %>">"></script>
    <script type="text/javascript">
        $(document).ready(function () {
            combo_fechas();

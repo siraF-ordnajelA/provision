@@ -206,6 +206,7 @@ namespace medallia
                     medallia.clases.medallia_res combito = new medallia.clases.medallia_res();
                     combito.cliente = lector["Nombre"].ToString();
                     combito.direccion = lector["direccion"].ToString();
+                    combito.region_mop = lector["region_mop"].ToString();
                     combito.gerencia = lector["GERENCIA"].ToString();
                     combito.distrito_atc = lector["DISTRITO_ATC"].ToString();
                     combito.distrito = lector["distrito"].ToString();
@@ -274,7 +275,7 @@ namespace medallia
         }
 
         [WebMethod]
-        public void guardado_1(Int16 mot, Int16 contex, Int32 id_clooper, Int64 id_cliente, int id_recurso, int id_encu, string fecha, string nom, string dire, string loca, string tel, string orden, string access_id, string bucket, Int32 central, string segmento, string tecno, string ctta, Int16 nps, Int16 tec, Int16 puntu, Int16 profe, Int16 conocimiento, Int16 calidad, Int16 comu, Int16 motivo, Int16 concepto, Int16 sub, Int16 detalle, Int16 accion, Int16 estado, Int16 gestion_clooper, string comentarios_cliente, Int16 resp_cliente, Int16 resp_final_cliente)
+        public void guardado_1(Int16 mot, Int16 contex, Int32 id_clooper, Int64 id_cliente, int id_recurso, int id_encu, string fecha, string nom, string region, string dire, string loca, string tel, string orden, string access_id, string bucket, Int32 central, string segmento, string tecno, string ctta, Int16 nps, Int16 tec, Int16 puntu, Int16 profe, Int16 conocimiento, Int16 calidad, Int16 comu, Int16 motivo, Int16 concepto, Int16 sub, Int16 detalle, Int16 accion, Int16 estado, Int16 gestion_clooper, string comentarios_cliente, Int16 resp_cliente, Int16 resp_final_cliente)
         {
             //String cadena = "Data Source=10.244.89.164; Initial Catalog=TELEGESTION; User ID=usr_web; Password=usr_web"; //CONEXION CON USUARIO Y CONTRASEÑA
             List<medallia.clases.cbo_tecnico> respuesta = new List<medallia.clases.cbo_tecnico>();
@@ -291,6 +292,7 @@ namespace medallia
                                                             @id_encuesta,
                                                             @fecha,
                                                             @nombre,
+                                                            @region,
                                                             @direccion,
                                                             @localidad,
                                                             @telefono,
@@ -333,6 +335,7 @@ namespace medallia
             cmdcadena.Parameters.Add("@id_encuesta", SqlDbType.Int).Value = id_encu;
             cmdcadena.Parameters.Add("@fecha", SqlDbType.Text).Value = fecha;
             cmdcadena.Parameters.Add("@nombre", SqlDbType.Text).Value = nom;
+            cmdcadena.Parameters.Add("@region", SqlDbType.Text).Value = region;
             cmdcadena.Parameters.Add("@direccion", SqlDbType.Text).Value = dire;
             cmdcadena.Parameters.Add("@localidad", SqlDbType.Text).Value = loca;
             cmdcadena.Parameters.Add("@telefono", SqlDbType.Text).Value = tel;

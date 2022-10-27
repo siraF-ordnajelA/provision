@@ -1,6 +1,11 @@
+use ATC
+
 declare @periodo varchar(6)
 declare @empresa varchar(80)
+declare @region_mop varchar(25)
 declare @tecno tinyint
+declare @total int
+
 set @periodo = '202205'
 
 create table #altas_empresa(Empresa varchar(120), Instalados int)
@@ -69,3 +74,15 @@ where periodo = @periodo and
 		tecnologia <> 'cobre'
 group by distrito_op_atc
 order by distrito_op_atc
+
+
+set @total = (select sum(Instalados) from #altas_empresa)
+
+
+----------------------------------------------------
+-- SELECT ALTAS POR EMPRESA
+select Empresa,
+		Instalados,
+		@total as Total,
+		round((cast(Instalados as float) / cast(@total as float)) * 100, 1) as Porcentaje
+from #altas_empresa order by Instalados desc

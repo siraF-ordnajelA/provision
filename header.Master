@@ -223,6 +223,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="medallia_graphs4.aspx" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Detractoresl x Acc. ejecutada</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="medallia_graphs2.aspx" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Encuestas</p>
@@ -446,7 +452,7 @@
     <footer class="main-footer">
         <strong>Web Provisi&oacute;n</strong>
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 1.3.6
+            <b>Version</b> 1.3.7
         </div>
     </footer>
 
