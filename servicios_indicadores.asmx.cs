@@ -549,7 +549,7 @@ namespace medallia
         }
 
         [WebMethod]
-        public void barra_detracciones_por_accion(Int16 id_empresa, String fecha1, String fecha2, Int16 opc)
+        public void barra_detracciones_por_accion(Int16 id_empresa, String fecha1, String fecha2, string motivo, Int16 opc)
         {
             List<clases.metricas_detractores_instalaciones> lista_datos = new List<clases.metricas_detractores_instalaciones>();
 
@@ -557,11 +557,12 @@ namespace medallia
             {
                 SqlCommand cmdcadena = new SqlCommand();
                 cmdcadena.CommandType = CommandType.StoredProcedure;
-                cmdcadena.CommandText = "metricas_detractores_accion @id_empresa, @fecha1, @fecha2, @opc";
+                cmdcadena.CommandText = "metricas_detractores_accion @id_empresa, @fecha1, @fecha2, @motivo, @opc";
                 cmdcadena.CommandType = CommandType.Text;
                 cmdcadena.Parameters.Add("@id_empresa", SqlDbType.TinyInt).Value = id_empresa;
                 cmdcadena.Parameters.Add("@fecha1", SqlDbType.Text).Value = fecha1;
                 cmdcadena.Parameters.Add("@fecha2", SqlDbType.Text).Value = fecha2;
+                cmdcadena.Parameters.Add("@motivo", SqlDbType.Text).Value = motivo;
                 cmdcadena.Parameters.Add("@opc", SqlDbType.TinyInt).Value = opc;
 
                 cmdcadena.Connection = con;

@@ -53,7 +53,7 @@
                                     <div class="col-sm-1">
                                         <div class="form-group">
                                             <label>&nbsp;</label>
-                                            <input type="button" class="form-control btn btn-primary" id="btn_ver" onclick="barras_detracciones_por_accion(<%= Session["id_ctta"] %>, 0, 2); pie_detraciones_accion(<%= Session["id_ctta"] %>, 0, 2);" value="Ver" />
+                                            <input type="button" class="form-control btn btn-primary" id="btn_ver" onclick="barras_detracciones_por_accion(<%= Session["id_ctta"] %>, 2); pie_detraciones_accion(<%= Session["id_ctta"] %>, 2);" value="Ver" />
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <center><label>Motivo</label></center>
-                                        <select class="form-control" id="cbo_motivo_detraccion">
+                                        <select class="form-control" id="cbo_motivo_detraccion" onchange="barras_detracciones_por_accion(<%= Session["id_ctta"] %>, 2); pie_detraciones_accion(<%= Session["id_ctta"] %>, 2);">
                                             <option value="0">-- TODOS --</option>
                                             <option value="3">Cliente</option>
                                             <option value="1">Comercial</option>

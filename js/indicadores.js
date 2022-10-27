@@ -670,7 +670,7 @@ function dibuja_pie_detracciones_tecno (tecnologia, instalaciones, porcentajes) 
 }
 
 ///////////////////////////// GRAPHS4 ////////////////////////////////
-function barras_detracciones_por_accion(empresa, motivo, opcion) {
+function barras_detracciones_por_accion(empresa, opcion) {
     var resultados = $('#t_det-accion');
     var cbo_fecha1 = document.getElementById("cbo_periodo1").value;
     var cbo_fecha2 = document.getElementById("cbo_periodo2").value;
@@ -714,10 +714,6 @@ function barras_detracciones_por_accion(empresa, motivo, opcion) {
         }
     }
 
-    if (cbo_motivo == "") {
-        cbo_motivo = motivo;
-    }
-
     resultados.empty(); //VACIA LA TABLA ANTES DE CARGAR UNA NUEVA
 
     //alert("Barra Empresa: " + empresa + " / cbo_empresa:" + cbo_empresa);
@@ -726,7 +722,7 @@ function barras_detracciones_por_accion(empresa, motivo, opcion) {
     $.ajax({
         url: "servicios_indicadores.asmx/barra_detracciones_por_accion",
         method: 'post',
-        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, opc: 1 },
+        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, motivo: cbo_motivo, opc: 1 },
         dataType: "json",
         success: function (datos) {
             $(datos).each(function (index, item) {
@@ -763,7 +759,7 @@ function barras_detracciones_por_accion(empresa, motivo, opcion) {
     $.ajax({
         url: "servicios_indicadores.asmx/barra_detracciones_por_accion",
         method: 'post',
-        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, opc: 5 },
+        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, motivo: 0, opc: 5 },
         dataType: "json",
         success: function (datos) {
             $(datos).each(function (index, item) {
@@ -916,10 +912,11 @@ function dibuja_barra2_detracciones_localidad_graphs4(localidades, casos, porcen
     });
 }
 
-function pie_detraciones_accion(empresa, motivo, opcion) {
+function pie_detraciones_accion(empresa, opcion) {
     var cbo_fecha1 = document.getElementById("cbo_periodo1").value;
     var cbo_fecha2 = document.getElementById("cbo_periodo2").value;
     var cbo_empresa = document.getElementById("cbo_ctta").value;
+    var cbo_motivo = document.getElementById("cbo_motivo_detraccion").value;
 
     var contador = 0;
 
@@ -960,7 +957,7 @@ function pie_detraciones_accion(empresa, motivo, opcion) {
     $.ajax({
         url: "servicios_indicadores.asmx/barra_detracciones_por_accion",
         method: 'post',
-        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, opc: 2 },
+        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, motivo: cbo_motivo, opc: 2 },
         dataType: "json",
         success: function (datos) {
             $(datos).each(function (index, item) {
@@ -998,7 +995,7 @@ function pie_detraciones_accion(empresa, motivo, opcion) {
     $.ajax({
         url: "servicios_indicadores.asmx/barra_detracciones_por_accion",
         method: 'post',
-        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, opc: 3 },
+        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, motivo: cbo_motivo, opc: 3 },
         dataType: "json",
         success: function (datos) {
             $(datos).each(function (index, item) {
@@ -1036,7 +1033,7 @@ function pie_detraciones_accion(empresa, motivo, opcion) {
     $.ajax({
         url: "servicios_indicadores.asmx/barra_detracciones_por_accion",
         method: 'post',
-        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, opc: 4 },
+        data: { id_empresa: cbo_empresa, fecha1: cbo_fecha1, fecha2: cbo_fecha2, motivo: cbo_motivo, opc: 4 },
         dataType: "json",
         success: function (datos) {
             $(datos).each(function (index, item) {
