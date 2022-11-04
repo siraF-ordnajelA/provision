@@ -4,11 +4,13 @@ alter procedure busca_user
 
 as
 
-select id_usr,
-		usuario_red,
-		apellido,
-		nombre,
-		perfil,
-		centro
-from usuarios
-where usuario_red = @usuario and passo = @passo
+select usuarios.id_usr,
+		usuarios.usuario_red,
+		usuarios.apellido,
+		usuarios.nombre,
+		usuarios.perfil,
+		usuarios.centro,
+		contratas.id_contrata
+from usuarios left join contratas
+on usuarios.centro = contratas.descripcion_contrata
+where usuarios.usuario_red = @usuario and passo = @passo

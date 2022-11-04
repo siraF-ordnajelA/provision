@@ -42,7 +42,7 @@ where periodo = (select replace(cast(@fecha1 as varchar(7)),'-','')) and
 		[Estado de la orden] = 'Completado'
 group by cast (timestamp as date), [ID RECURSO]
 
-
+-- ARREGLAR FECHA PEGA EN TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -- CONSULTA FINAL ACTUALIZO PROMEDIO INSTALACIONES DIARIAS POR TECNICO
 UPDATE Q4s_30d
 SET prom_diarias = tabla2agregada.campo1agregado
@@ -52,7 +52,7 @@ FROM Q4s_30d as t1
             WHERE t1.recurso = t2.id_tecnico
             GROUP BY t1.recurso) as  tabla2agregada
      ON t1.id_tecnico = tabla2agregada.recurso
-
+where t1.Fecha = @fecha1
 
 -- INSERTO DIAS TRABAJADOS POR TECNICO
 truncate table #cumplidas_raw
@@ -77,7 +77,8 @@ FROM Q4s_30d as t1
             FROM #cumplidas_raw
             GROUP BY recurso) as  tabla2agregada
      ON t1.id_tecnico = tabla2agregada.recurso
-				
+where t1.Fecha = @fecha1
+
 /*
 merge into Q4s_30d as destino
 using (select recurso,

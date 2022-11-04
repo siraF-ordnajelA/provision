@@ -2,6 +2,7 @@ alter procedure metricas_detractores_accion
 @empresa tinyint,
 @fecha1 varchar(8),
 @fecha2 varchar(8),
+@motivo varchar(1),
 @opc tinyint
 
 as
@@ -21,69 +22,92 @@ BEGIN
 	set @id_ctta = @empresa
 END
 
+IF(@motivo = 0)
+BEGIN
+set @motivo = '_'
+END
+
+
+
 
 IF(@opc = 1)
 BEGIN
 	IF(@fecha1 is null or @fecha1 = '' or @fecha1 = 0 or @fecha2 = 0)
 	BEGIN
-		set @totales = (select count(*) from lista_medallia_casos where cast(fecha_mail as date) >= @fecha_inicio)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
 			-- ACCION EJECUTADA
-			select [Acción ejecutada] as Accion_ejecutada,
+			select case when accion_ejecutada = 1 then 'Derivado a la contratista'
+					when accion_ejecutada = 2 then 'Derivado a clooper comercial'
+					when accion_ejecutada = 3 then 'Derivado a soporte sistema'
+					when accion_ejecutada = 4 then 'Gestionado por clooper' end as Accion_ejecutada,
 					count(*) as casos,
 					@totales as totales,
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
-			from lista_medallia_casos
-			where cast(fecha_mail as date) >= @fecha_inicio
-			group by [Acción ejecutada]
+			from medallia_encuestas
+			where cast(fecha_mail as date) >= @fecha_inicio and
+					motivo_detractor like @motivo
+			group by accion_ejecutada
 			order by count(*) desc
 		END
 		ELSE
 		BEGIN
 			-- ACCION EJECUTADA
-			select [Acción ejecutada] as Accion_ejecutada,
+			select case when accion_ejecutada = 1 then 'Derivado a la contratista'
+					when accion_ejecutada = 2 then 'Derivado a clooper comercial'
+					when accion_ejecutada = 3 then 'Derivado a soporte sistema'
+					when accion_ejecutada = 4 then 'Gestionado por clooper' end as Accion_ejecutada,
 					count(*) as casos,
 					@totales as totales,
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
-			from lista_medallia_casos
+			from medallia_encuestas
 			where cast(fecha_mail as date) >= @fecha_inicio and
-					id_empresa = @id_ctta
-			group by [Acción ejecutada]
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
+			group by accion_ejecutada
 			order by count(*) desc
 		END
 	END
 
 	ELSE
 	BEGIN
-		set @totales = (select count(*) from lista_medallia_casos where cast(fecha_mail as date) between @fecha1 and @fecha2)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2 and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
-			select [Acción ejecutada] as Accion_ejecutada,
+			select case when accion_ejecutada = 1 then 'Derivado a la contratista'
+					when accion_ejecutada = 2 then 'Derivado a clooper comercial'
+					when accion_ejecutada = 3 then 'Derivado a soporte sistema'
+					when accion_ejecutada = 4 then 'Gestionado por clooper' end as Accion_ejecutada,
 					count(*) as casos,
 					@totales as totales,
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
-			from lista_medallia_casos
-			where cast(fecha_mail as date) between @fecha1 and @fecha2
-			group by [Acción ejecutada]
+			from medallia_encuestas
+			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
+					motivo_detractor like @motivo
+			group by accion_ejecutada
 			order by count(*) desc
 		END
 		ELSE
 		BEGIN
-			select [Acción ejecutada] as Accion_ejecutada,
+			select case when accion_ejecutada = 1 then 'Derivado a la contratista'
+					when accion_ejecutada = 2 then 'Derivado a clooper comercial'
+					when accion_ejecutada = 3 then 'Derivado a soporte sistema'
+					when accion_ejecutada = 4 then 'Gestionado por clooper' end as Accion_ejecutada,
 					count(*) as casos,
 					@totales as totales,
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
-			from lista_medallia_casos
+			from medallia_encuestas
 			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
-					id_empresa = @id_ctta
-			group by [Acción ejecutada]
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
+			group by accion_ejecutada
 			order by count(*) desc
 		END
 	END
@@ -95,7 +119,7 @@ IF(@opc = 2)
 BEGIN
 	IF(@fecha1 is null or @fecha1 = '' or @fecha1 = 0 or @fecha2 = 0)
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio and motivo_detractor like @motivo)
 
 		IF (@empresa = 0)
 		BEGIN
@@ -106,7 +130,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) >= @fecha_inicio
+			where cast(fecha_mail as date) >= @fecha_inicio and
+					motivo_detractor like @motivo
 			group by region_mop
 			order by count(*) desc
 		END
@@ -120,7 +145,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) >= @fecha_inicio and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by region_mop
 			order by count(*) desc
 		END
@@ -128,7 +154,7 @@ BEGIN
 
 	ELSE
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2 and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
@@ -139,7 +165,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) between @fecha1 and @fecha2
+			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
+					motivo_detractor like @motivo
 			group by region_mop
 			order by count(*) desc
 		END
@@ -153,7 +180,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by region_mop
 			order by count(*) desc
 		END
@@ -167,7 +195,7 @@ IF(@opc = 3)
 BEGIN
 	IF(@fecha1 is null or @fecha1 = '' or @fecha1 = 0 or @fecha2 = 0)
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
@@ -178,7 +206,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) >= @fecha_inicio
+			where cast(fecha_mail as date) >= @fecha_inicio and
+					motivo_detractor like @motivo
 			group by segmento
 			order by count(*) desc
 		END
@@ -192,7 +221,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) >= @fecha_inicio and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by segmento
 			order by count(*) desc
 		END
@@ -200,7 +230,7 @@ BEGIN
 
 	ELSE
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2 and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
@@ -210,7 +240,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) between @fecha1 and @fecha2
+			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
+					motivo_detractor like @motivo
 			group by segmento
 			order by count(*) desc
 		END
@@ -223,7 +254,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by segmento
 			order by count(*) desc
 		END
@@ -237,7 +269,7 @@ IF(@opc = 4)
 BEGIN
 	IF(@fecha1 is null or @fecha1 = '' or @fecha1 = 0 or @fecha2 = 0)
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
@@ -248,7 +280,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) >= @fecha_inicio
+			where cast(fecha_mail as date) >= @fecha_inicio and
+					motivo_detractor like @motivo
 			group by tecnologia
 			order by count(*) desc
 		END
@@ -262,7 +295,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) >= @fecha_inicio and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by tecnologia
 			order by count(*) desc
 		END
@@ -270,7 +304,7 @@ BEGIN
 
 	ELSE
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2 and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
@@ -281,7 +315,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) between @fecha1 and @fecha2
+			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
+					motivo_detractor like @motivo
 			group by tecnologia
 			order by count(*) desc
 		END
@@ -295,7 +330,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by tecnologia
 			order by count(*) desc
 		END
@@ -309,7 +345,7 @@ IF(@opc = 5)
 BEGIN
 	IF(@fecha1 is null or @fecha1 = '' or @fecha1 = 0 or @fecha2 = 0)
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) >= @fecha_inicio and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
@@ -320,7 +356,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) >= @fecha_inicio
+			where cast(fecha_mail as date) >= @fecha_inicio and
+					motivo_detractor like @motivo
 			group by localidad
 			order by count(*) desc
 		END
@@ -334,7 +371,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) >= @fecha_inicio and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by localidad
 			order by count(*) desc
 		END
@@ -342,7 +380,7 @@ BEGIN
 
 	ELSE
 	BEGIN
-		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2)
+		set @totales = (select count(*) from medallia_encuestas where cast(fecha_mail as date) between @fecha1 and @fecha2 and motivo_detractor like @motivo)
 		
 		IF (@empresa = 0)
 		BEGIN
@@ -353,7 +391,8 @@ BEGIN
 					round((cast(count(*) as float) / cast(@totales as float)) * 100, 2) as Porcentaje
 
 			from medallia_encuestas
-			where cast(fecha_mail as date) between @fecha1 and @fecha2
+			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
+					motivo_detractor like @motivo
 			group by localidad
 			order by count(*) desc
 		END
@@ -367,7 +406,8 @@ BEGIN
 
 			from medallia_encuestas
 			where cast(fecha_mail as date) between @fecha1 and @fecha2 and
-					id_empresa = @id_ctta
+					id_empresa = @id_ctta and
+					motivo_detractor like @motivo
 			group by localidad
 			order by count(*) desc
 		END

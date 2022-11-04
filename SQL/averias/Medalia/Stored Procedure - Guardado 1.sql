@@ -7,6 +7,7 @@ alter procedure medallia_guardado_1
 @id_encuesta int,
 @fecha varchar(25),
 @nombre varchar(150),
+@region_mop varchar(25),
 @direccion varchar(250),
 @localidad varchar(150),
 @telefono varchar(11),
@@ -33,7 +34,7 @@ alter procedure medallia_guardado_1
 @resp_final_cliente tinyint,
 @id_cent smallint,
 @segmento varchar(11),
-@tecnologia varchar(12)
+@tecnologia varchar(13)
 
 as
 
@@ -55,6 +56,7 @@ insert into medallia_encuestas (motivo,
 								fecha_mail,
 								fecha_cierre1,
 								nombre,
+								region_mop,
 								direccion,
 								localidad,
 								contacto,
@@ -95,6 +97,7 @@ values (@motivo,
 cast (getdate() as smalldatetime),
 case when @estado = 1 then cast (getdate() as smalldatetime) else null end,
 @nombre,
+@region_mop,
 @direccion,
 @localidad,
 @telefono,

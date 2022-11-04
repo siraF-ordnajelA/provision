@@ -51,6 +51,7 @@ FROM Q4s_7d as t1
             WHERE t1.recurso = t2.id_tecnico
             GROUP BY t1.recurso) as  tabla2agregada
      ON t1.id_tecnico = tabla2agregada.recurso
+where t1.Fecha = @fecha1
 
 
 -- INSERTO DIAS TRABAJADOS POR TECNICO
@@ -76,3 +77,4 @@ FROM Q4s_7d as t1
             FROM #cumplidas_raw
             GROUP BY recurso) as  tabla2agregada
      ON t1.id_tecnico = tabla2agregada.recurso
+where t1.Fecha = @fecha1

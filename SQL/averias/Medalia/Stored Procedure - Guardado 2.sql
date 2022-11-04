@@ -8,6 +8,12 @@ alter procedure medallia_guardado_2
 
 as
 
+declare @obs varchar(2000)
+set @obs = (select respuesta_supervisor from medallia_encuestas where id_caso = @id_cas)
+
+
+IF (@obs is null)
+BEGIN
 update medallia_encuestas
 set fecha_cierre1 = cast(getdate() as smalldatetime),
 	estado = 3,
@@ -16,3 +22,16 @@ set fecha_cierre1 = cast(getdate() as smalldatetime),
 	sn_anterior = @sn_anterior,
 	sn_actual = @sn_actual
 where id_caso = @id_cas
+END
+
+ELSE
+BEGIN
+update medallia_encuestas
+set fecha_cierre1 = cast(getdate() as smalldatetime),
+	estado = 3,
+	respuesta_supervisor = @obs + ' // ' + @resp_sup,
+	cbo_resp_supervisor = @cbo_resp_sup,
+	sn_anterior = @sn_anterior,
+	sn_actual = @sn_actual
+where id_caso = @id_cas
+END

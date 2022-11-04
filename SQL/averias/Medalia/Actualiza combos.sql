@@ -3,11 +3,9 @@ select * from medallia_cbo_sub_conceptos order by sub_concepto
 select * from medallia_cbo_detalle order by detalle
 
 
-select * from medallia_cbo_conceptos where motivo = 3 order by concepto
-select * from medallia_cbo_sub_conceptos where id_concepto in (31,28,27,30,26,12,29) order by sub_concepto
-select * from medallia_cbo_detalle where id_subconcepto = 12 order by detalle
-
-select * from medallia_cbo_detalle where detalle = 'DAÑOS EN LA INSTALACIÓN'
+select * from medallia_cbo_conceptos where motivo = 4 order by concepto
+select * from medallia_cbo_sub_conceptos where id_concepto in (15) order by sub_concepto
+select * from medallia_cbo_detalle where id_subconcepto = 67 order by detalle
 
 /*
 insert into medallia_cbo_conceptos (motivo, concepto, activo)
@@ -21,7 +19,7 @@ values (3,'Período de prueba', 1),
 		(44,'-', 1)
 
 insert into medallia_cbo_sub_conceptos (id_concepto, sub_concepto, activo)
-values (31,'Conforme con el servicio', 1),
+values (15,'Falta de material', 1),
 		(28,'Conforme con el servicio', 1),
 		(27,'No permite el ingreso', 1),
 		(27,'Ingreso sin protocolo sanitario', 1),
@@ -35,10 +33,10 @@ values (31,'Conforme con el servicio', 1),
 		(29,'Tiempo de espera técnico', 1)
 
 insert into medallia_cbo_detalle (id_subconcepto, detalle, activo)
-values (12,'Daños en la instalación', 1),
-		(49,'-', 1),
-		(56,'-', 1),
-		(54,'-', 1),
+values (67,'STB', 1),
+		(67,'Drops', 1),
+		(67,'HGU', 1),
+		(54,'STB', 1),
 		(55,'-', 1),
 		(51,'-', 1),
 		(52,'-', 1),
@@ -55,7 +53,7 @@ where id_concepto in (11)
 
 update medallia_cbo_sub_conceptos
 set activo = 0
-where id_concepto = 12
+where id_concepto = 15
 
 update medallia_cbo_detalle
 set activo = 0

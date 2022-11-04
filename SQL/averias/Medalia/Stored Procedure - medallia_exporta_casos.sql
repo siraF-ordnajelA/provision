@@ -4,6 +4,9 @@ as
 
 SET LANGUAGE Spanish;
 
+declare @fecha as date
+set @fecha = dateadd(month, -12, cast(getdate() as date)) -- Resta 1 año
+
 select case when a.motivo = 1 then 'Instalación' else 'Cancelación' end as MOTIVO,
 		case when a.contexto = 1 then 'COVID-19' else 'Tradicional' end as CONTEXTO,
 		b.apellido + ', ' + b.nombre as CLOOPER,
@@ -138,7 +141,9 @@ select case when a.motivo = 1 then 'Instalación' else 'Cancelación' end as MOTIV
 				when a.cbo_resp_supervisor = 44 then 'Cliente ausente'
 				when a.cbo_resp_supervisor = 45 then 'Configuración BP'
 				when a.cbo_resp_supervisor = 46 then 'Desconexión Drop'
-				when a.cbo_resp_supervisor = 47 then 'Manipulación de instalación' else '' end as [MOTIVO SUPERVISOR],
+				when a.cbo_resp_supervisor = 47 then 'Manipulación de instalación'
+				when a.cbo_resp_supervisor = 48 then 'BAJA POR ERROR'
+				when a.cbo_resp_supervisor = 49 then 'CONFIGURACIÓN HGU' else '' end as [MOTIVO SUPERVISOR],
 		a.respuesta_supervisor as [RESPUESTA DEL SUPERVISOR],
 		a.sn_anterior as [SERIAL ANTERIOR],
 		a.sn_actual as [SERIAL ACTUAL],
@@ -151,4 +156,5 @@ on a.concepto = d.id_concepto left join medallia_cbo_sub_conceptos as e
 on a.subconcepto = e.id_subconcepto left join medallia_cbo_detalle as f
 on a.detalle = f.id_detalle left join centrales2 as g
 on a.id_central = g.CENT_ID
+where a.fecha_mail >= @fecha
 order by a.fecha_mail desc

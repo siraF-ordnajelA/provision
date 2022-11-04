@@ -1,0 +1,11 @@
+create table averias_motivo (appt_number varchar(50) null,
+				Fecha date null,
+				aworktype varchar(20),
+				estado varchar(15),
+				complete_reason varchar(10),
+				not_done_reason varchar(10),
+				dni varchar(15),
+				nombre varchar(150),
+				empresa varchar(80),
+				comentario varchar(5000),
+				central smallint)
